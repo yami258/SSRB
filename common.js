@@ -58,7 +58,6 @@ setup () {
         this.setupStripedTable()
         this.setupTableFilter()
         this.setupScrollableTable()
-        this.setupSongListConverter() // 入力補助ツールページ
         this.setupRegexReplacer() // 入力補助ツールページ
         this.setupAutoFilter() // 歌唱楽曲一覧ページなど
         if (!this.isMobileLayout) {
@@ -353,110 +352,6 @@ setupScrollableTable () {
 } // setupScrollableTable
 
 //----------
-// 歌唱楽曲リスト変換ツール (入力補助ツールページ)
-//----------
-
-setupSongListConverter () {
-
-    const title = document.title
-    const boxes = {}
-
-    initSongListConverter.call(this)
-
-    function initSongListConverter () {
-        const userArea = document.querySelector('div.user-area')
-        // 見出しを基準にする。見つからなければ適用なし
-        const headings = userArea.querySelectorAll('div.title-1')
-        const converterHeading = Array.prototype.find.call(headings, (heading) => {
-            const text = heading.textContent
-            // ホロライブ、どっとライブ、もちぷろ、のりプロ、しぐれうい、ホロスターズ
-            return text.match('歌リスト変換書き換え簡略版')
-        })
-        if (!converterHeading) {
-            return
-        }
-
-        // 基準の見出し以降からテキストボックスを8つ見つける。見つからなければ適用なし
-        const textareas = userArea.querySelectorAll('textarea.PLAIN-BOX')
-        const firstBoxIndex = Array.prototype.findIndex.call(textareas, (textarea) => {
-            return (WikiExtension.compareNodeOrder(textarea, converterHeading) > 0)
-        })
-        if (firstBoxIndex < 0 || firstBoxIndex + 7 >= textareas.length) {
-            return
-        }
-
-        boxes.name = textareas[firstBoxIndex]
-        boxes.roman = textareas[firstBoxIndex + 1]
-        boxes.date = textareas[firstBoxIndex + 2]
-        boxes.cast = textareas[firstBoxIndex + 3]
-        boxes.url = textareas[firstBoxIndex + 4]
-        boxes.songs = textareas[firstBoxIndex + 5]
-        boxes.castOut = textareas[firstBoxIndex + 6]
-        boxes.songsOut = textareas[firstBoxIndex + 7]
-
-        if (title.includes('編集用_入力補助ツール')) {
-            window.setInterval(convertSongList.bind(this), 1000)
-        }
-    }
-
-    // 歌唱楽曲リスト変換処理
-    function convertSongList () {
-        const name = boxes.name.value.replace(/\n/g, '')
-        const roman = boxes.roman.value.replace(/\n/g, '')
-        const dateSlash = boxes.date.value.replace(/\n/g, '')
-        const castTitle = boxes.cast.value.replace(/\n/g, '')
-        const url = boxes.url.value.replace(/\n/g, '')
-        const songs = boxes.songs.value.split('\n')
-        const datePlain = dateSlash.replace(/\//g, '')
-        const dateDot = dateSlash.replace(/\//g, '.')
-        const castAnchor = roman + datePlain
-        const dataAnchor = `data_${roman}${datePlain}`
-        const escapedCastTitle = WikiExtension.escapeWikiComponents(castTitle)
-
-        const songRows = []
-
-        for (const songName of songs) {
-            if (!songName) continue
-            const escapedSongName = WikiExtension.escapeWikiComponents(songName)
-            // const index = String(songRows.length + 1).padStart(3, '0')
-            const index = ('00' + (songRows.length + 1)).slice(-3)
-            const songRow = [
-                name,
-                `[[${dateDot}生>#${castAnchor}]]-${index}`,
-                `[[${escapedSongName}>>${url}&t=]]`,
-                ''
-            ]
-            if (songRows.length === 0) {
-                songRow[1] += `&aname(${dataAnchor})`
-            }
-            songRows.push('|' + songRow.join('|') + '|')
-        }
-
-        const castRow = [
-            name,
-            `[[${dateSlash}>#${dataAnchor}]]&aname(${castAnchor})`,
-            `[[${escapedCastTitle}>>${url}]]`,
-            String(songRows.length)
-        ]
-
-        switch (this.wikiId) {
-            case 'siroyoutuber': // どっとライブ
-            case 'hololivetv': // ホロライブ
-            case 'mochi8hiyoko': // もちぷろ
-                castRow.push('')
-                break
-        }
-
-        boxes.castOut.value = '|' + castRow.join('|') + '|'
-        boxes.songsOut.value = songRows.join('\n')
-
-        boxes.castOut.readOnly = true
-        boxes.songsOut.readOnly = true
-    }
-
-} // setupSongListConverter
-
-//----------
 // 正規表現置換ツール (入力補助ツールページ)
 //----------
 
@@ -525,16 +420,6 @@ setupAutoFilter () {
     function applyFilters () {
         const title = document.title
 
-        // どっとライブ
-        if (this.wikiId === 'siroyoutuber') {
-            if (title.match(/^(?!どっとライブ)(.+?)\s*【歌唱楽曲一覧】/)) {
-                const name = RegExp.$1
-                applyFilter(2, name) // 簡易
-                applyFilter(3, name) // 外部
-                applyFilter(4, name) // 歌ってみた
-                applyFilter(5, name) // イベント
-            }
-        }
         // ホロライブ
         if (this.wikiId === 'hololivetv') {
             if (title.match(/^(?!ホロライブ)(.+?)\s*【歌唱楽曲一覧】/)) {
@@ -542,22 +427,6 @@ setupAutoFilter () {
                 applyFilter(2, name) // オリジナルソング
                 applyFilter(3, name) // 歌ってみた
                 applyFilter(4, name) // イベント
-            }
-        }
-        // のりプロ
-        if (this.wikiId === 'noriopro') {
-            if (title.match(/^(?!のりプロ)(.+?)\s*【歌唱楽曲一覧】/)) {
-                const name = RegExp.$1
-                applyFilter(0, name) // オリジナルソング
-                applyFilter(1, name) // 歌ってみた
-            }
-        }
-        // ホロスターズ
-        if (this.wikiId === 'holostarstv') {
-            if (title.match(/^(?!ホロスターズ)(.+?)\s*【歌唱楽曲一覧】/)) {
-                const name = RegExp.$1
-                applyFilter(2, name) // オリジナルソング
-                applyFilter(3, name) // 歌ってみた
             }
         }
         // wiki別分岐終了
