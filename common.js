@@ -420,14 +420,13 @@ setupAutoFilter () {
     function applyFilters () {
         const title = document.title
 
-        // ホロライブ
-        if (this.wikiId === 'hololivetv') {
-            if (title.match(/^(?!ホロライブ)(.+?)\s*【歌唱楽曲一覧】/)) {
-                const name = RegExp.$1
-                applyFilter(2, name) // オリジナルソング
-                applyFilter(3, name) // 歌ってみた
-                applyFilter(4, name) // イベント
-            }
+        // SSRB
+        if (title.match(/^(?!ホロライブ)(.+?)\s*【歌唱楽曲一覧】/)) {
+            const name = RegExp.$1
+            applyFilter(1, name) // オリジナルソング一覧
+            applyFilter(2, name) // 歌ってみた動画一覧
+            applyFilter(3, name) // 歌唱楽曲一覧（自枠）
+            applyFilter(4, name) // 歌唱楽曲一覧（他枠）
         }
         // wiki別分岐終了
 
@@ -1280,133 +1279,75 @@ setupSyntaxChecker () {
 //----------
 
 initMembersData () {
-    if (this.wikiId === 'hololivetv') {
-        this.membersData = {
-            sora:       {yt: 'UCp6993wxpyDPHUpavwDFqgg', bi: '8899503', tw: '', name: 'ときのそら', tag: '#ときのそら生放送'},
-            roboco:     {yt: 'UCDqI2jOz0weumE8s7paEk6g', bi: '4664126', tw: '', name: 'ロボ子さん', tag: '#ロボ子生放送'},
-            mel:        {yt: 'UCD8HOxPs4Xvsm8H0ZxXGiBw', bi: '21131813', tw: '', name: '夜空メル', tag: '#メル生放送'},
-            rose:       {yt: 'UCFTLzh12_nrtzqBPsTCqenA', bi: '21219990', tw: '', name: 'アキロゼ', tag: '#アキびゅーわーるど'},
-            haato:      {yt: 'UC1CfXB_kRs3C-zaeTG3oGyg', bi: '14275133', tw: '', name: '赤井はあと', tag: '#はあちゃまなう'},
-            fubuki:     {yt: 'UCdn5BQ06XqgXoAxIhbqw5Rg', bi: '11588230', tw: '', name: '白上フブキ', tag: '#フブキch'},
-            matsuri:    {yt: 'UCQ0UDLQCjY0rmuxCDE38FGg', bi: '13946381', tw: '', name: '夏色まつり', tag: '#夏まつch'},
-            aqua:       {yt: 'UC1opHUrw8rvnsadT-iGp7Cg', bi: '14917277', tw: '', name: '湊あくあ', tag: '#湊あくあ生放送'},
-            shion:      {yt: 'UCXTpFs_3PqI41qX2d9tL2Rw', bi: '21132965', tw: '', name: '紫咲シオン', tag: '#紫咲シオン'},
-            nakiri:     {yt: 'UC7fk0CB07ly8oSl0aqKkqFg', bi: '21130785', tw: '', name: '百鬼あやめ', tag: '#百鬼あやめch'},
-            choco:      {yt: 'UC1suqwovbL1kzsoaZgFZLKg', bi: '21107534', tw: '', name: '癒月ちょこ', tag: '#癒月診療所'},
-            subaru:     {yt: 'UCvzGlP9oQwU--Y0r9id_jnA', bi: '21129632', tw: '', name: '大空スバル', tag: '#生スバル'},
-            mio:        {yt: 'UCp-5t9SrOQwXMU7iIjQfARg', bi: '21133979', tw: '', name: '大神ミオ', tag: '#ミオかわいい'},
-            miko:       {yt: 'UC-hM6YJuNYVAmUWxeIr9FeA', bi: '21144047', tw: '', name: 'さくらみこ', tag: '#みこなま'},
-            korone:     {yt: 'UChAnqc_AY5_I3Px5dig3X1Q', bi: '21421141', tw: '', name: '戌神ころね', tag: '#生神もんざえもん'},
-            okayu:      {yt: 'UCvaTdHTWBGv3MKj3KVqJVCw', bi: '21420932', tw: '', name: '猫又おかゆ', tag: '#生おかゆ'},
-            azki:       {yt: 'UC0TXe_LYZ4scaW2XMyi5_kw', bi: '21267062', tw: '', name: 'AZKi', tag: '#AZKi生放送・#あずきんち'},
-            suisei:     {yt: 'UC5CwaMl1eIgY8h02uZw7u8A', bi: '190577', tw: '', name: '星街すいせい', tag: '#ほしまちすたじお'},
-            pekora:     {yt: 'UC1DCedRgGHBdm81E1llLhOQ', bi: '21560356', tw: '', name: '兎田ぺこら', tag: '#ぺこらいぶ'},
-            rushia:     {yt: 'UCl_gCybOJRIgOXw6Qb4qJzQ', bi: '21545232', tw: '', name: '潤羽るしあ', tag: '#るしあらいぶ'},
-            flare:      {yt: 'UCvInZx9h3jC2JzsIzoOebWg', bi: '21572617', tw: '', name: '不知火フレア', tag: '#フレアストリーム'},
-            noel:       {yt: 'UCdyqAaZDKHXg4Ahi7VENThQ', bi: '21583736', tw: '', name: '白銀ノエル', tag: '#ノエルーム'},
-            marine:     {yt: 'UCCzUftO8KOVkV4wQG1vkUvg', bi: '21584153', tw: '', name: '宝鐘マリン', tag: '#マリン航海記'},
-            kanata:     {yt: 'UCZlDXzGoo7d44bwdNObFacg', bi: '21752681', tw: '', name: '天音かなた', tag: '#天界学園放送部'},
-            coco:       {yt: 'UCS9uQI-jC3DE0L4IpXyvr6w', bi: '21752686', tw: '', name: '桐生ココ', tag: '#ココここ'},
-            watame:     {yt: 'UCqm3BQLlJfvkTsX_hvm0UmA', bi: '21752694', tw: '', name: '角巻わため', tag: '#ドドドライブ'},
-            towa:       {yt: 'UC1uv2Oq6kNxgATlCiez59hw', bi: '21752710', tw: '', name: '常闇トワ', tag: '#トワイライヴ'},
-            luna:       {yt: 'UCa9Y57gfeY0Zro_noHRVrnw', bi: '21752719', tw: '', name: '姫森ルーナ', tag: '#なのらいぶ'},
-            lamy:       {yt: 'UCFKOVgVbGmX65RxO3EtH3iw', bi: '', tw: '', name: '雪花ラミィ', tag: '#らみらいぶ'},
-            nene:       {yt: 'UCAWSyEs_Io8MtpY3m-zqILA', bi: '', tw: '', name: '桃鈴ねね', tag: '#ねねいろらいぶ'},
-            botan:      {yt: 'UCUKD-uaobj9jiqB-VXt71mA', bi: '', tw: '', name: '獅白ぼたん', tag: '#ぐうたらいぶ'},
-            aloe:       {yt: 'UCgZuwn-O7Szh9cAgHqJ6vjw', bi: '', tw: '', name: '魔乃アロエ', tag: '#魔のらいぶ'},
-            polka:      {yt: 'UCK9V2B22uJYu3N7eR_BT9QA', bi: '', tw: '', name: '尾丸ポルカ', tag: '#ポルカ公演中'},
-            laplus:     {yt: 'UCENwRMx5Yh42zWpzURebzTw', bi:'', tw: '', name: 'ラプラス・ダークネス', tag: ''},
-            lui:        {yt: 'UCs9_O1tRPMQTHQ-N_L6FU2g', bi:'', tw: '', name: '鷹嶺ルイ', tag: ''},
-            koyori:     {yt: 'UC6eWCld0KwmyHFbAqK3V-Rw', bi:'', tw: '', name: '博衣こより', tag: ''},
-            chloe:      {yt: 'UCIBY1ollUsauvVi4hW4cumw', bi:'', tw: '', name: '沙花叉クロヱ', tag: ''},
-            iroha:      {yt: 'UC_vMYWcDjmfdpH6r4TTn1MQ', bi:'', tw: '', name: '風真いろは', tag: ''},
+    this.membersData = {
+        sora:       {yt: 'UCp6993wxpyDPHUpavwDFqgg', bi: '8899503', tw: '', name: 'ときのそら', tag: '#ときのそら生放送'},
+        roboco:     {yt: 'UCDqI2jOz0weumE8s7paEk6g', bi: '4664126', tw: '', name: 'ロボ子さん', tag: '#ロボ子生放送'},
+        mel:        {yt: 'UCD8HOxPs4Xvsm8H0ZxXGiBw', bi: '21131813', tw: '', name: '夜空メル', tag: '#メル生放送'},
+        rose:       {yt: 'UCFTLzh12_nrtzqBPsTCqenA', bi: '21219990', tw: '', name: 'アキロゼ', tag: '#アキびゅーわーるど'},
+        haato:      {yt: 'UC1CfXB_kRs3C-zaeTG3oGyg', bi: '14275133', tw: '', name: '赤井はあと', tag: '#はあちゃまなう'},
+        fubuki:     {yt: 'UCdn5BQ06XqgXoAxIhbqw5Rg', bi: '11588230', tw: '', name: '白上フブキ', tag: '#フブキch'},
+        matsuri:    {yt: 'UCQ0UDLQCjY0rmuxCDE38FGg', bi: '13946381', tw: '', name: '夏色まつり', tag: '#夏まつch'},
+        aqua:       {yt: 'UC1opHUrw8rvnsadT-iGp7Cg', bi: '14917277', tw: '', name: '湊あくあ', tag: '#湊あくあ生放送'},
+        shion:      {yt: 'UCXTpFs_3PqI41qX2d9tL2Rw', bi: '21132965', tw: '', name: '紫咲シオン', tag: '#紫咲シオン'},
+        nakiri:     {yt: 'UC7fk0CB07ly8oSl0aqKkqFg', bi: '21130785', tw: '', name: '百鬼あやめ', tag: '#百鬼あやめch'},
+        choco:      {yt: 'UC1suqwovbL1kzsoaZgFZLKg', bi: '21107534', tw: '', name: '癒月ちょこ', tag: '#癒月診療所'},
+        subaru:     {yt: 'UCvzGlP9oQwU--Y0r9id_jnA', bi: '21129632', tw: '', name: '大空スバル', tag: '#生スバル'},
+        mio:        {yt: 'UCp-5t9SrOQwXMU7iIjQfARg', bi: '21133979', tw: '', name: '大神ミオ', tag: '#ミオかわいい'},
+        miko:       {yt: 'UC-hM6YJuNYVAmUWxeIr9FeA', bi: '21144047', tw: '', name: 'さくらみこ', tag: '#みこなま'},
+        korone:     {yt: 'UChAnqc_AY5_I3Px5dig3X1Q', bi: '21421141', tw: '', name: '戌神ころね', tag: '#生神もんざえもん'},
+        okayu:      {yt: 'UCvaTdHTWBGv3MKj3KVqJVCw', bi: '21420932', tw: '', name: '猫又おかゆ', tag: '#生おかゆ'},
+        azki:       {yt: 'UC0TXe_LYZ4scaW2XMyi5_kw', bi: '21267062', tw: '', name: 'AZKi', tag: '#AZKi生放送・#あずきんち'},
+        suisei:     {yt: 'UC5CwaMl1eIgY8h02uZw7u8A', bi: '190577', tw: '', name: '星街すいせい', tag: '#ほしまちすたじお'},
+        pekora:     {yt: 'UC1DCedRgGHBdm81E1llLhOQ', bi: '21560356', tw: '', name: '兎田ぺこら', tag: '#ぺこらいぶ'},
+        rushia:     {yt: 'UCl_gCybOJRIgOXw6Qb4qJzQ', bi: '21545232', tw: '', name: '潤羽るしあ', tag: '#るしあらいぶ'},
+        flare:      {yt: 'UCvInZx9h3jC2JzsIzoOebWg', bi: '21572617', tw: '', name: '不知火フレア', tag: '#フレアストリーム'},
+        noel:       {yt: 'UCdyqAaZDKHXg4Ahi7VENThQ', bi: '21583736', tw: '', name: '白銀ノエル', tag: '#ノエルーム'},
+        marine:     {yt: 'UCCzUftO8KOVkV4wQG1vkUvg', bi: '21584153', tw: '', name: '宝鐘マリン', tag: '#マリン航海記'},
+        kanata:     {yt: 'UCZlDXzGoo7d44bwdNObFacg', bi: '21752681', tw: '', name: '天音かなた', tag: '#天界学園放送部'},
+        coco:       {yt: 'UCS9uQI-jC3DE0L4IpXyvr6w', bi: '21752686', tw: '', name: '桐生ココ', tag: '#ココここ'},
+        watame:     {yt: 'UCqm3BQLlJfvkTsX_hvm0UmA', bi: '21752694', tw: '', name: '角巻わため', tag: '#ドドドライブ'},
+        towa:       {yt: 'UC1uv2Oq6kNxgATlCiez59hw', bi: '21752710', tw: '', name: '常闇トワ', tag: '#トワイライヴ'},
+        luna:       {yt: 'UCa9Y57gfeY0Zro_noHRVrnw', bi: '21752719', tw: '', name: '姫森ルーナ', tag: '#なのらいぶ'},
+        lamy:       {yt: 'UCFKOVgVbGmX65RxO3EtH3iw', bi: '', tw: '', name: '雪花ラミィ', tag: '#らみらいぶ'},
+        nene:       {yt: 'UCAWSyEs_Io8MtpY3m-zqILA', bi: '', tw: '', name: '桃鈴ねね', tag: '#ねねいろらいぶ'},
+        botan:      {yt: 'UCUKD-uaobj9jiqB-VXt71mA', bi: '', tw: '', name: '獅白ぼたん', tag: '#ぐうたらいぶ'},
+        aloe:       {yt: 'UCgZuwn-O7Szh9cAgHqJ6vjw', bi: '', tw: '', name: '魔乃アロエ', tag: '#魔のらいぶ'},
+        polka:      {yt: 'UCK9V2B22uJYu3N7eR_BT9QA', bi: '', tw: '', name: '尾丸ポルカ', tag: '#ポルカ公演中'},
+        laplus:     {yt: 'UCENwRMx5Yh42zWpzURebzTw', bi:'', tw: '', name: 'ラプラス・ダークネス', tag: ''},
+        lui:        {yt: 'UCs9_O1tRPMQTHQ-N_L6FU2g', bi:'', tw: '', name: '鷹嶺ルイ', tag: ''},
+        koyori:     {yt: 'UC6eWCld0KwmyHFbAqK3V-Rw', bi:'', tw: '', name: '博衣こより', tag: ''},
+        chloe:      {yt: 'UCIBY1ollUsauvVi4hW4cumw', bi:'', tw: '', name: '沙花叉クロヱ', tag: ''},
+        iroha:      {yt: 'UC_vMYWcDjmfdpH6r4TTn1MQ', bi:'', tw: '', name: '風真いろは', tag: ''},
 
-            risu:       {yt: 'UCOyYb1c43VlX9rc_lT6NKQw', bi:'', tw:'', name: 'Ayunda Risu', tag: ''},
-            moona:      {yt: 'UCP0BspO_AMEe3aQqqpo89Dg', bi:'', tw:'', name: 'Moona Hoshinova', tag: ''},
-            iofi:       {yt: 'UCAoy6rzhSf4ydcYjJw3WoVg', bi:'', tw:'', name: 'Airani Iofifteen', tag: ''},
-            ollie:      {yt: 'UCYz_5n-uDuChHtLo7My1HnQ', bi:'', tw:'', name: 'Kureiji Ollie', tag: ''},
-            anya:       {yt: 'UC727SQYUvx5pDDGQpTICNWg', bi:'', tw:'', name: 'Anya Melfissa', tag: ''},
-            reine:      {yt: 'UChgTyjG-pdNvxxhdsXfHQ5Q', bi:'', tw:'', name: 'Pavolia Reine', tag: ''},
-            zeta:       {yt: 'UCTvHWSfBZgtxE4sILOaurIQ', bi:'', tw:'', name: 'Vestia Zeta', tag: ''},
-            kaela:      {yt: 'UCZLZ8Jjx_RN2CXloOmgTHVg', bi:'', tw:'', name: 'Kaela Kovalskia', tag: ''},
-            kobo:       {yt: 'UCjLEmnpCNeisMxy134KPwWw', bi:'', tw:'', name: 'Kobo Kanaeru', tag: ''},
-            indonesia:  {yt: 'UCfrWoRGlawPQDQxxeIDRP0Q', bi:'', tw:'', name: 'hololive Indonesia', tag: ''},
+        risu:       {yt: 'UCOyYb1c43VlX9rc_lT6NKQw', bi:'', tw:'', name: 'Ayunda Risu', tag: ''},
+        moona:      {yt: 'UCP0BspO_AMEe3aQqqpo89Dg', bi:'', tw:'', name: 'Moona Hoshinova', tag: ''},
+        iofi:       {yt: 'UCAoy6rzhSf4ydcYjJw3WoVg', bi:'', tw:'', name: 'Airani Iofifteen', tag: ''},
+        ollie:      {yt: 'UCYz_5n-uDuChHtLo7My1HnQ', bi:'', tw:'', name: 'Kureiji Ollie', tag: ''},
+        anya:       {yt: 'UC727SQYUvx5pDDGQpTICNWg', bi:'', tw:'', name: 'Anya Melfissa', tag: ''},
+        reine:      {yt: 'UChgTyjG-pdNvxxhdsXfHQ5Q', bi:'', tw:'', name: 'Pavolia Reine', tag: ''},
+        zeta:       {yt: 'UCTvHWSfBZgtxE4sILOaurIQ', bi:'', tw:'', name: 'Vestia Zeta', tag: ''},
+        kaela:      {yt: 'UCZLZ8Jjx_RN2CXloOmgTHVg', bi:'', tw:'', name: 'Kaela Kovalskia', tag: ''},
+        kobo:       {yt: 'UCjLEmnpCNeisMxy134KPwWw', bi:'', tw:'', name: 'Kobo Kanaeru', tag: ''},
+        indonesia:  {yt: 'UCfrWoRGlawPQDQxxeIDRP0Q', bi:'', tw:'', name: 'hololive Indonesia', tag: ''},
 
-            calliope:   {yt: 'UCL_qhgtOy0dy1Agp8vkySQg', bi:'', tw:'', name: 'Mori Calliope', tag: ''},
-            kiara:      {yt: 'UCHsx4Hqa-1ORjQTh9TYDhww', bi:'', tw:'', name: 'Takanashi Kiara', tag: ''},
-            inanis:     {yt: 'UCMwGHR0BTZuLsmjY_NT5Pwg', bi:'', tw:'', name: "Ninomae Ina'nis", tag: ''},
-            gura:       {yt: 'UCoSrY_IQQVpmIRZ9Xf-y93g', bi:'', tw:'', name: 'Gawr Gura', tag: ''},
-            amelia:     {yt: 'UCyl1z3jo3XHR1riLFKG5UAg', bi:'', tw:'', name: 'Watson Amelia', tag: ''},
-            irys:       {yt: 'UC8rcEBzJSleTkf_-agPM20g', bi:'', tw:'', name: 'IRyS', tag: ''},
-            sana:       {yt: 'UCsUj0dszADCGbF3gNrQEuSQ', bi:'', tw:'', name: 'Tsukumo Sana', tag: ''},
-            fauna:      {yt: 'UCO_aKKYxn4tvrqPjcTzZ6EQ', bi:'', tw:'', name: 'Ceres Fauna', tag: ''},
-            kronii:     {yt: 'UCmbs8T6MWqUHP1tIQvSgKrg', bi:'', tw:'', name: 'Ouro Kronii', tag: ''},
-            mumei:      {yt: 'UC3n5uGu18FoCy23ggWWp8tA', bi:'', tw:'', name: 'Nanashi Mumei', tag: ''},
-            hakos:      {yt: 'UCgmPnx-EEeOrZSg5Tiw7ZRQ', bi:'', tw:'', name: 'Hakos Baelz', tag: ''},
-            english:    {yt: 'UCotXwY6s8pWmuWd_snKYjhg', bi:'', tw:'', name: 'hololive English', tag: ''},
+        calliope:   {yt: 'UCL_qhgtOy0dy1Agp8vkySQg', bi:'', tw:'', name: 'Mori Calliope', tag: ''},
+        kiara:      {yt: 'UCHsx4Hqa-1ORjQTh9TYDhww', bi:'', tw:'', name: 'Takanashi Kiara', tag: ''},
+        inanis:     {yt: 'UCMwGHR0BTZuLsmjY_NT5Pwg', bi:'', tw:'', name: "Ninomae Ina'nis", tag: ''},
+        gura:       {yt: 'UCoSrY_IQQVpmIRZ9Xf-y93g', bi:'', tw:'', name: 'Gawr Gura', tag: ''},
+        amelia:     {yt: 'UCyl1z3jo3XHR1riLFKG5UAg', bi:'', tw:'', name: 'Watson Amelia', tag: ''},
+        irys:       {yt: 'UC8rcEBzJSleTkf_-agPM20g', bi:'', tw:'', name: 'IRyS', tag: ''},
+        sana:       {yt: 'UCsUj0dszADCGbF3gNrQEuSQ', bi:'', tw:'', name: 'Tsukumo Sana', tag: ''},
+        fauna:      {yt: 'UCO_aKKYxn4tvrqPjcTzZ6EQ', bi:'', tw:'', name: 'Ceres Fauna', tag: ''},
+        kronii:     {yt: 'UCmbs8T6MWqUHP1tIQvSgKrg', bi:'', tw:'', name: 'Ouro Kronii', tag: ''},
+        mumei:      {yt: 'UC3n5uGu18FoCy23ggWWp8tA', bi:'', tw:'', name: 'Nanashi Mumei', tag: ''},
+        hakos:      {yt: 'UCgmPnx-EEeOrZSg5Tiw7ZRQ', bi:'', tw:'', name: 'Hakos Baelz', tag: ''},
+        english:    {yt: 'UCotXwY6s8pWmuWd_snKYjhg', bi:'', tw:'', name: 'hololive English', tag: ''},
 
-            ankimo:     {yt: 'UCGSOfFtVCTBfmGxHK5OD8ag', bi: '', tw: '', name: 'あん肝', tag: '#あん肝'},
+        ankimo:     {yt: 'UCGSOfFtVCTBfmGxHK5OD8ag', bi: '', tw: '', name: 'あん肝', tag: '#あん肝'},
 
-            chocosub:   {yt: 'UCp3tgHXw_HI0QMk1K8qh3gQ', bi: '', tw: '', name: 'ちょこSub', tag: '#癒月診療所'},
-            //  gamer:      {name: "ホロライブゲーマーズ"},
-            holo:       {yt: 'UCJFZiqLMntJufDCHc6bQixg', bi: '8982686', tw: '', name: 'ホロライブ公式', tag: '#ホロライブ'}
-        }
-    } else if (this.wikiId === 'siroyoutuber') {
-        this.membersData = {
-            chieri:     { yt: 'UCP9ZgeIJ3Ri9En69R0kJc9Q', tw: 'chieri_kakyoin', ml: '10596504', name: '花京院ちえり', tag: '#花京院ちえり' },
-            dot:        { yt: 'UCAZ_LA7f0sjuZ1Ni8L2uITw', tw: 'dotLIVEyoutuber', name: '.LIVE', tag: '#どっとライブ' },
-            iori:       { yt: 'UCyb-cllCkMREr9de-hoiDrg', tw: 'YamatoIori', ml: '10596535', name: 'ヤマトイオリ', tag: '#ヤマトイオリ' },
-            mememe:     { yt: 'UCz6Gi81kE6p5cdW1rT0ixqw', tw: 'mokomeme_ch', ml: '10596609', name: 'もこ田めめめ', tag: '#もこ田めめめ' },
-            milk:       { yt: 'UCju7v8SkoWUQ5ITCQwmYpYg', tw: 'milk_merry_', name: 'メリーミルク', tag: '#ひつじさんといっしょ' },
-            pino:       { yt: 'UCMzxQ58QL4NNbWghGymtHvw', tw: 'carro_pino', ml: '10953955', name: 'カルロピノ', tag: '#カルロピノ' },
-            siro:       { yt: 'UCLhUvJ_wO9hOvv_yYENu4fQ', tw: 'SIROyoutuber', bl: '21307497', name: '電脳少女シロ', tag: '#シロ生放送' },
-            suzu:       { yt: 'UCUZ5AlC3rTlM-rA2cj5RP6w', tw: 'kagura_suzu', ml: '10596385', name: '神楽すず', tag: '#神楽すず' },
-            uma:        { yt: 'UC6TyfKcsrPwBsBnx2QobVLQ', tw: 'bayoutuber', name: 'ばあちゃる', tag: '#ばあちゃる' },
-            milily:     { yt: 'UCSlcMof1GIPvH6H_VcknCbQ', tw: 'Milily_VTuber', name: '七星みりり', tag: '#ななみりライブ' },
-            rikumu:     { yt: 'UCtM5G3bS7zM8bv6p-OwoNTw', tw: 'Rikumu_VTuber', name: 'リクム', tag: '#リクム' },
-            rururica:   { yt: 'UCcd4MSYH7bPIBEUqmBgSZQw', tw: 'Rururica_VTuber', name: 'ルルンルルリカ', tag: '#ルルンルーム' },
-            radio:      { yt: 'UCMzxQ58QL4NNbWghGymtHvw', tw: 'carro_pino', name: 'カルロピノ', tag: '#とりとらじお' }
-        }
-    } else if (this.wikiId === 'noriopro') {
-        this.membersData = {
-            norioo_: {yt: 'UC8NZiqKx6fsDT3AVcMiVFyA', tw: 'norioo_', name: '犬山たまき', tag: '' },
-            mishiro: {yt: 'UCC0i9nECi4Gz7TU63xZwodg', tw: 'mishiro_seiso', name: '白雪みしろ', tag: '' },
-            MILK:    {yt: 'UCJCzy0Fyrm0UhIrGQ7tHpjg', tw: 'Enomiya_MILK', name: '愛宮みるく', tag: '' },
-            taKUMA:  {yt: 'UCCXME7oZmXB2VFHJbz5496A', tw: 'KUMAgaya_taKUMA', name: '熊谷タクマ', tag: '' },
-            yuzuru:  {yt: 'UCle1cz6rcyH0a-xoMYwLlAg', tw: 'Himesaki_yuzuru', name: '姫咲ゆずる', tag: '' },
-            kirara:  {yt: 'UCBAeKqEIugv69Q2GIgcH7oA', tw: 'omakirara', name: '逢魔きらら', tag: '' },
-            momo:    {yt: 'UCxrmkJf_X1Yhte_a4devFzA', tw: 'kurumizawamomo', name: '胡桃澤もも', tag: '' },
-            warabe:  {yt: 'UCLyTXfCZtl7dyhta9Jg3pZg', tw: 'hoozukiwarabe', name: '鬼灯わらべ', tag: '' },
-            iroha_:  {yt: 'UCWIPfdcux1WxuX5yZLPJDww', tw: 'inariiroha_', name: '稲荷いろは', tag: '' },
-            Reg:     {yt: 'UCuycJ_IsA5ESbTYhe05ozqQ', tw: 'Reg_Lionheart', name: 'レグルシュ・ライオンハート', tag: '' },
-            shin:    {yt: 'UCMxIxoMdtcLkZ1wTq7qjztg', tw: 'nekozenoshin', name: '猫瀬乃しん', tag: '' }
-        }
-    } else if (this.wikiId === 'holostarstv') {
-        this.membersData = {
-            miyabii:    {yt: 'UC6t3-_N8A6ME1JShZHHqOMw', tw: 'miyabihanasaki', name: '花咲みやび', tag: '' },
-            kira:       {yt:'UCEzsociuFqVwgZuMaZqaCsg', tw: 'kagamikirach', name: '鏡見キラ', tag: '' },
-            izuru:      {yt: 'UCZgOv3YDEs-ZnZWDYVwJdmA', tw: 'kanadeizuru', name: '奏手イヅル', tag: '' },
-            arurandeisu:{yt: 'UCKeAhJvy8zgXWbh9duVjIaQ', tw: 'arurandeisu', name: 'アルランディス', tag: '' },
-            rikka:      {yt: 'UC9mf_ZVpouoILRY9NUIaK-w', tw: 'rikkaroid', name: '律可', tag: '' },
-            astel:      {yt: 'UCNVEsYbiZjH5QLmGeSgTSzg', tw: 'astelleda', name: 'アステル・レダ', tag: '' },
-            temma:      {yt: 'UCGNI4MENvnsymYjKiZwv9eg', tw: 'kishidotemma', name: '岸堂天真', tag: '' },
-            roberu:     {yt: 'UCANDOlYTJT7N5jlRC3zfzVA', tw: 'yukokuroberu', name: '夕刻ロベル', tag: '' },
-            kaoru:      {yt: 'UCsehvfwaWF6nWuFnXI0AqZQ', tw: 'tsukishitakaoru', name: '月下カオル', tag: '' },
-            shien:      {yt: 'UChSvpZYRPh0FvG4SJGSga3g', tw: 'kageyamashien', name: '影山シエン', tag: '' },
-            oga:        {yt:'UCwL7dgTxKo8Y4RFIKWaf8gA', tw: 'aragamioga', name: '荒咬オウガ', tag: '' },
-            fuma:       {yt:'UCc88OV45ICgHbn3ZqLLb52w', tw: 'yatogamifuma', name: '夜十神封魔', tag: '' },
-            uyu:        {yt:'UCgRqGV1gBf2Esxh0Tz1vxzw', tw: 'utsugiuyu', name: '羽継烏有', tag: '' },
-            gamma:      {yt: 'UCkT1u65YS49ca_LsFwcTakw', tw: 'hizakigamma', name: '緋崎ガンマ', tag: '' },
-            rio:        {yt:'UCdfMHxjcCc2HSd9qFvfJgjg', tw: 'minaserioch', name: '水無世燐央', tag: '' },
-
-            altare:     {yt: 'UCyxtGMdWlURZ30WSnEjDOQw', tw: 'regisaltare', name: 'Regis Altare', tag: '' },
-            dezmond:    {yt: 'UC7MMNHR-kf9EN1rXiesMTMw', tw: 'magnidezmond', name: 'Magni Dezmond', tag: '' },
-            syrios:     {yt: 'UC2hx0xVkMoHGWijwr_lA01w', tw: 'axelsyrios', name: 'Axel Syrios', tag: '' },
-            vesper:     {yt: 'UCDRWSO281bIHYVi-OV3iFYA', tw: 'noirvesper_en', name: 'Noir Vesper', tag: '' },
-            holostarstv:{yt: 'UCWsfcksUUpoEvhia0_ut0bA', tw: 'holostarstv', name: 'ホロスターズ公式', tag: '' }
-        }
-    }   else {
-        this.membersData = null
+        chocosub:   {yt: 'UCp3tgHXw_HI0QMk1K8qh3gQ', bi: '', tw: '', name: 'ちょこSub', tag: '#癒月診療所'},
+        //  gamer:      {name: "ホロライブゲーマーズ"},
+        holo:       {yt: 'UCJFZiqLMntJufDCHc6bQixg', bi: '8982686', tw: '', name: 'ホロライブ公式', tag: '#ホロライブ'}
     }
 } // initMembersData
 
