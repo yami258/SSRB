@@ -468,7 +468,7 @@ setupGoogleCalendarIframe () {
 
     function applyIframe () {
         const title = document.title
-        if (title.include("【スケジュール】")) {
+        if (title.includes("【スケジュール】")) {
             let content_block_element = document.getElementById('content_block_2-body');
             let new_element = document.createElement('iframe');
             new_element.style = "border:solid 1px #777";
