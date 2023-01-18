@@ -96,24 +96,6 @@ initPageInfo () {
             return 'article'
         } else if (restPath.startsWith('/e/')) {
             return 'edit'
-        } else if (restPath.startsWith('/comment/')) {
-            return 'comment'
-        } else if (restPath.startsWith('/l/')) {
-            return 'page_list'
-        } else if (restPath.startsWith('/diff/')) {
-            return 'diff'
-        } else if (restPath.startsWith('/history/')) {
-            return 'history'
-        } else if (restPath.startsWith('/dv/')) {
-            return 'version'
-        } else if (restPath.startsWith('/members/')) {
-            return 'members'
-        } else if (restPath.startsWith('/r/')) {
-            return 'member_history'
-        } else if (restPath.startsWith('/bbs/')) {
-            return 'bbs'
-        } else if (restPath.startsWith('/search')) {
-            return 'search'
         }
         return null
     }
