@@ -468,6 +468,17 @@ setupGoogleCalendarIframe () {
 
     function applyIframe () {
         const title = document.title
+        if (title.include("【スケジュール】")) {
+            let content_block_element = document.getElementById('content_block_2-body');
+            let new_element = document.createElement('iframe');
+            new_element.style = "border:solid 1px #777";
+            new_element.width = "100%";
+            new_element.height = "500";
+            new_element.setAttribute("frameBorder", "0");
+            new_element.setAttribute("scrolling", "no");
+            new_element.src = 'https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23A79B8E&ctz=Asia%2FTokyo&showTitle=0&showPrint=0&showTz=0&showCalendars=1&showNav=1&showDate=1&mode=AGENDA&src=cGM2ODAxc3JAZ21haWwuY29t&color=%237986CB';
+            content_block_element.before(new_element);
+        }
     }
 } // setupGoogleCalendarIframe
 
