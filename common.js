@@ -460,6 +460,18 @@ setupAutoFilter () {
 } // setupAutoFilter
 
 //----------
+// Googleカレンダー埋め込み
+//----------
+
+setupGoogleCalendarIframe () {
+    applyIframe.call(this)
+
+    function applyIframe () {
+        const title = document.title
+    }
+} // setupGoogleCalendarIframe
+
+//----------
 // フィルターリンク生成機能 (記事画面右メニュー)
 //----------
 
