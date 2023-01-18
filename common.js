@@ -1368,7 +1368,6 @@ initMembersData () {
         ankimo:     {yt: 'UCGSOfFtVCTBfmGxHK5OD8ag', bi: '', tw: '', name: 'あん肝', tag: '#あん肝'},
 
         chocosub:   {yt: 'UCp3tgHXw_HI0QMk1K8qh3gQ', bi: '', tw: '', name: 'ちょこSub', tag: '#癒月診療所'},
-        //  gamer:      {name: "ホロライブゲーマーズ"},
         holo:       {yt: 'UCJFZiqLMntJufDCHc6bQixg', bi: '8982686', tw: '', name: 'ホロライブ公式', tag: '#ホロライブ'}
     }
 } // initMembersData
