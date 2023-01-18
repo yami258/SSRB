@@ -51,16 +51,10 @@ setup () {
     if (this.pageType === 'article') {
         this.setupTableFilter()
         this.setupScrollableTable()
-        this.setupAutoFilter() // 歌唱楽曲一覧ページなど
+        this.setupAutoFilter()
         this.setupGoogleCalendarIframe()
         if (!this.isMobileLayout) {
         }
-
-    } else if (this.pageType === 'edit') {
-        // PC版のみ適用
-        if (!this.isMobileLayout) {
-        }
-    }
 
     this.updateReadyState('loaded')
     console.log('extension has applied.')
@@ -77,15 +71,15 @@ updateReadyState (name) {
 
 // ページ情報を確認
 initPageInfo () {
-    let wikiId = null
+    let subDir = null
     let restPath = ''
 
     if (location.hostname === 'seesaawiki.jp') {
-        [wikiId, restPath] = location.pathname.split(/^\/(?:w\/)?([^/]+)/).slice(1)
+        [subDir, restPath] = location.pathname.split(/^\/(?:w\/)?([^/]+)/).slice(1)
     }
 
     // Wiki ID
-    this.wikiId = wikiId
+    this.subDir = subDir
     // ページ種別
     this.pageType = getPageType(restPath)
     // スマホ向け
@@ -94,26 +88,6 @@ initPageInfo () {
     function getPageType (restPath) {
         if (restPath.startsWith('/d/') || restPath === '/') {
             return 'article'
-        } else if (restPath.startsWith('/e/')) {
-            return 'edit'
-        } else if (restPath.startsWith('/comment/')) {
-            return 'comment'
-        } else if (restPath.startsWith('/l/')) {
-            return 'page_list'
-        } else if (restPath.startsWith('/diff/')) {
-            return 'diff'
-        } else if (restPath.startsWith('/history/')) {
-            return 'history'
-        } else if (restPath.startsWith('/dv/')) {
-            return 'version'
-        } else if (restPath.startsWith('/members/')) {
-            return 'members'
-        } else if (restPath.startsWith('/r/')) {
-            return 'member_history'
-        } else if (restPath.startsWith('/bbs/')) {
-            return 'bbs'
-        } else if (restPath.startsWith('/search')) {
-            return 'search'
         }
         return null
     }
