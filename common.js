@@ -60,7 +60,7 @@ setup () {
         this.setupScrollableTable()
         this.setupRegexReplacer() // 入力補助ツールページ
         this.setupAutoFilter() // 歌唱楽曲一覧ページなど
-        this.setupGoogleCalendar()
+        this.setupGoogleCalendarIframe()
         if (!this.isMobileLayout) {
             this.setupTableFilterGenerator() // 右メニュー
         }
