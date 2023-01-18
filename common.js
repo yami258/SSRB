@@ -37,7 +37,6 @@ init () {
     this.initPageInfo()
     this.initExperimental()
     this.initCustomHashParams()
-    this.initMembersData()
     this.updateReadyState('initialized')
 
     const shouldStopBeforeSetup = !!localStorage.getItem('stop_before_setup')
@@ -671,24 +670,6 @@ setupEditingTools () {
         [[&ref(https://image01-seesaawiki-jp.cdn.ampproject.org/ii/w240/s/image01.seesaawiki.jp/h/v/xxx/XXXXXXXXXX.jpg,100%)>https://image01.seesaawiki.jp/h/v/xxx/XXXXXXXXXX.jpg]]`.replace(/^[ \t]+/gm, '')
     ))
 
-    if (this.membersData) {
-        const repr = Object.getOwnPropertyNames(this.membersData)[0]
-        addSimpleProcessor('liveeurl', 'YouTube配信リンク', (text) => {
-            for (const key in this.membersData) {
-                const reftag = `[[${this.membersData[key].name}>>https://www.youtube.com/channel/${this.membersData[key].yt}/live]]`
-                // text = text.replaceAll(this.membersData[key].name, reftag);
-                text = text.split(this.membersData[key].name).join(reftag)
-            }
-            return text
-        }, (
-            `メンバー名をYouTube配信へのリンクに変換する
-
-            ${this.membersData[repr].name}
-            ↓↓↓
-            [[${this.membersData[repr].name}>>https://www.youtube.com/channel/${this.membersData[repr].yt}/live]]`.replace(/^[ \t]+/gm, '')
-        ))
-    }
-
     activateTool(localStorage.getItem('active_tool') || 'htmlref')
 
     function initEditingTools () {
@@ -1295,17 +1276,6 @@ setupSyntaxChecker () {
     }
 
 } // setupSyntaxChecker
-
-//----------
-// メンバー情報 (編集ツールで使用)
-//----------
-
-initMembersData () {
-    this.membersData = {
-        botan:      {yt: 'UCUKD-uaobj9jiqB-VXt71mA', bi: '', tw: '', name: '獅白ぼたん', tag: '#ぐうたらいぶ'},
-        holo:       {yt: 'UCJFZiqLMntJufDCHc6bQixg', bi: '8982686', tw: '', name: 'ホロライブ公式', tag: '#ホロライブ'}
-    }
-} // initMembersData
 
 //----------
 // その他
