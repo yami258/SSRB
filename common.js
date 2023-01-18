@@ -1365,8 +1365,6 @@ initMembersData () {
         hakos:      {yt: 'UCgmPnx-EEeOrZSg5Tiw7ZRQ', bi:'', tw:'', name: 'Hakos Baelz', tag: ''},
         english:    {yt: 'UCotXwY6s8pWmuWd_snKYjhg', bi:'', tw:'', name: 'hololive English', tag: ''},
 
-        ankimo:     {yt: 'UCGSOfFtVCTBfmGxHK5OD8ag', bi: '', tw: '', name: 'あん肝', tag: '#あん肝'},
-
         chocosub:   {yt: 'UCp3tgHXw_HI0QMk1K8qh3gQ', bi: '', tw: '', name: 'ちょこSub', tag: '#癒月診療所'},
         holo:       {yt: 'UCJFZiqLMntJufDCHc6bQixg', bi: '8982686', tw: '', name: 'ホロライブ公式', tag: '#ホロライブ'}
     }
