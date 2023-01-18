@@ -464,9 +464,10 @@ setupAutoFilter () {
 //----------
 
 setupGoogleCalendarIframe () {
-    const title = document.title
+    const title = document.title;
+    const page_url = location.href;
 
-    if (title.includes("【スケジュール】")) {
+    if (title.includes('【スケジュール】') || page_url == 'https://seesaawiki.jp/ssrb/') {
         let content_block_element = document.getElementById('content_block_2-body');
         let new_element = document.createElement('iframe');
         new_element.style = 'border:solid 1px #777';
