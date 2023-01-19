@@ -51,15 +51,8 @@ setup () {
     if (this.pageType === 'article') {
         this.setupTableFilter()
         this.setupScrollableTable()
-        this.setupAutoFilter() // 歌唱楽曲一覧ページなど
+        this.setupAutoFilter()
         this.setupGoogleCalendarIframe()
-        if (!this.isMobileLayout) {
-        }
-
-    } else if (this.pageType === 'edit') {
-        // PC版のみ適用
-        if (!this.isMobileLayout) {
-        }
     }
 
     this.updateReadyState('loaded')
