@@ -312,7 +312,7 @@ setupGoogleCalendarIframe () {
         new_element.height = '500'
         new_element.setAttribute('frameBorder', '0')
         new_element.setAttribute('scrolling', 'no')
-        new_element.src = 'https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23A79B8E&ctz=Asia%2FTokyo&showTitle=0&showPrint=0&showTz=0&showCalendars=1&showNav=1&showDate=1&mode=AGENDA&src=cGM2ODAxc3JAZ21haWwuY29t&color=%237986CB'
+        new_element.src = 'https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23FFFFFF&ctz=Asia%2FTokyo&showTitle=0&showPrint=0&showTz=0&showCalendars=1&showNav=1&showDate=1&mode=AGENDA&src=cGM2ODAxc3JAZ21haWwuY29t&color=%23A79B8E'
         content_block_element.before(new_element)
     }
 } // setupGoogleCalendarIframe
